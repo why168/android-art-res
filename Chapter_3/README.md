@@ -61,7 +61,7 @@ computeCurrentVelocity这个方法参数表示的是一个时间单位或者说�
 
 
 
-方法名     | 描述                                  | 所属接口
+方法名     | 描述                                  | 所属接口
 --------  | ------------------------------------ | ------------------- |
 onDown  | 手指轻轻触摸屏幕一瞬间，由1个ACTION_DOWN触  | OnGestureListener  |
 onShowPress  | 手指轻轻触摸屏幕，尚未松开或拖动，由1个ACTION_DOWN触发，这是单击行为  | OnGestureListener  |
@@ -77,7 +77,7 @@ onDoubleTapEvent  | 表示发生了双击行为，在双击的期间，ACTION_DO
 ## Scroller 弹性滑动对象，用于实现View的弹性滑动
 
 ```
-我们知道，当使用View的scrollTO/scrollBy方法来进行滑动时，其他过程是瞬间完成的，这个没过渡效果的滑动用户体验不好。
+我们知道，当使用View的scrollTO/scrollBy方法来进行滑动时，其他过程是瞬间完成的，这个没过渡效果的滑动用户体验不好。
 Scroller派上用场实现有过渡效果的滑动，其过程不是瞬间完成，而是在一定的时间间隔内完成的。
 Scroller本身无法让View弹性滑动，他需要和View的computeScroll方法配合使用才能共同完成这个功能。
 ```
