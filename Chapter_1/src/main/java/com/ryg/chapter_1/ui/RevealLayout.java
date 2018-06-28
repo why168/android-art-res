@@ -55,7 +55,6 @@ public class RevealLayout extends LinearLayout implements Runnable {
         init();
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public RevealLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();

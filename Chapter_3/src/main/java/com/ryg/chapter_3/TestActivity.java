@@ -3,12 +3,14 @@ package com.ryg.chapter_3;
 import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.animation.ValueAnimator.AnimatorUpdateListener;
 import com.ryg.chapter_3.R;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
@@ -32,25 +34,25 @@ public class TestActivity extends Activity implements OnClickListener,
 
     private int mCount = 0;
 
-    @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {
+    private Handler mHandler = new Handler(Looper.myLooper()) {
         public void handleMessage(Message msg) {
             switch (msg.what) {
-            case MESSAGE_SCROLL_TO: {
-                mCount++;
-                if (mCount <= FRAME_COUNT) {
-                    float fraction = mCount / (float) FRAME_COUNT;
-                    int scrollX = (int) (fraction * 100);
-                    mButton1.scrollTo(scrollX, 0);
-                    mHandler.sendEmptyMessageDelayed(MESSAGE_SCROLL_TO, DELAYED_TIME);
+                case MESSAGE_SCROLL_TO: {
+                    mCount++;
+                    if (mCount <= FRAME_COUNT) {
+                        float fraction = mCount / (float) FRAME_COUNT;
+                        int scrollX = (int) (fraction * 100);
+                        mButton1.scrollTo(scrollX, 0);
+                        System.out.println("scrollX = " + scrollX);
+                        mHandler.sendEmptyMessageDelayed(MESSAGE_SCROLL_TO, DELAYED_TIME);
+                    }
+                    break;
                 }
-                break;
-            }
 
-            default:
-                break;
+                default:
+                    break;
             }
-        };
+        }
     };
 
     @Override
@@ -67,44 +69,43 @@ public class TestActivity extends Activity implements OnClickListener,
         mButton2.setOnLongClickListener(this);
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            Log.d(TAG, "button1.left=" + mButton1.getLeft());
-            Log.d(TAG, "button1.x=" + mButton1.getX());
-        }
+        Log.d(TAG, "button1.left=" + mButton1.getLeft());
+        Log.d(TAG, "button1.x=" + mButton1.getX());
     }
 
     @Override
     public void onClick(View v) {
         if (v == mButton1) {
-            // mButton1.setTranslationX(100);
+             /*
+             mButton1.setTranslationX(100);
 
-            // Log.d(TAG, "button1.left=" + mButton1.getLeft());
-            // Log.d(TAG, "button1.x=" + mButton1.getX());
-            // ObjectAnimator.ofFloat(mButton1, "translationX", 0, 100)
-            // .setDuration(1000).start();
-            // MarginLayoutParams params = (MarginLayoutParams) mButton1
-            // .getLayoutParams();
-            // params.width += 100;
-            // params.leftMargin += 100;
-            // mButton1.requestLayout();
-            // mButton1.setLayoutParams(params);
+             Log.d(TAG, "button1.left=" + mButton1.getLeft());
+             Log.d(TAG, "button1.x=" + mButton1.getX());
+             ObjectAnimator.ofFloat(mButton1, "translationX", 0, 100)
+             .setDuration(1000).start();
+             MarginLayoutParams params = (MarginLayoutParams) mButton1
+             .getLayoutParams();
+             params.width += 100;
+             params.leftMargin += 100;
+             mButton1.requestLayout();
+             mButton1.setLayoutParams(params);
 
-            // final int startX = 0;
-            // final int deltaX = 100;
-            // ValueAnimator animator = ValueAnimator.ofInt(0,
-            // 1).setDuration(1000);
-            // animator.addUpdateListener(new AnimatorUpdateListener() {
-            // @Override
-            // public void onAnimationUpdate(ValueAnimator animator) {
-            // float fraction = animator.getAnimatedFraction();
-            // mButton1.scrollTo(startX + (int) (deltaX * fraction), 0);
-            // }
-            // });
-            // animator.start();
+             final int startX = 0;
+             final int deltaX = 100;
+             ValueAnimator animator = ValueAnimator.ofInt(0,
+             1).setDuration(1000);
+             animator.addUpdateListener(new AnimatorUpdateListener() {
+             @Override
+             public void onAnimationUpdate(ValueAnimator animator) {
+             float fraction = animator.getAnimatedFraction();
+             mButton1.scrollTo(startX + (int) (deltaX * fraction), 0);
+             }
+             });
+             animator.start();
+             */
 
             mHandler.sendEmptyMessageDelayed(MESSAGE_SCROLL_TO, DELAYED_TIME);
         }
@@ -118,6 +119,7 @@ public class TestActivity extends Activity implements OnClickListener,
 
     @Override
     protected void onResume() {
+        super.onResume();
         Log.d(TAG, "onResume");
         super.onStart();
     }

@@ -20,19 +20,21 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         if (savedInstanceState != null) {
             String test = savedInstanceState.getString("extra_test");
             Log.d(TAG, "[onCreate]restore extra_test:" + test);
         }
-        findViewById(R.id.button1).setOnClickListener(new OnClickListener() {
 
+        findViewById(R.id.button1).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("com.ryg.charpter_1.c");
-                //intent.setClass(MainActivity.this, SecondActivity.class);
+                Intent intent = new Intent();
+//                intent.setClass(MainActivity.this, SecondActivity.class);
+                intent.setAction("com.ryg.charpter_1.c");
                 intent.putExtra("time", System.currentTimeMillis());
                 intent.addCategory("com.ryg.category.c");
-                intent.setDataAndType(Uri.parse("file://abc"), "text/plain");
+//                intent.setDataAndType(Uri.parse("file://abc"), "text/plain");
                 startActivity(intent);
             }
         });
@@ -53,7 +55,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         Log.d(TAG, "onResume");
-        super.onStart();
+        super.onResume();
     }
 
     @Override

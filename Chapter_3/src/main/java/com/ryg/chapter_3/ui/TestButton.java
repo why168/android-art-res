@@ -4,13 +4,14 @@ import com.nineoldandroids.view.ViewHelper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.widget.TextView;
 
-public class TestButton extends TextView {
+public class TestButton extends AppCompatTextView {
     private static final String TAG = "TestButton";
     private int mScaledTouchSlop;
     // 分别记录上次滑动的坐标
@@ -32,8 +33,7 @@ public class TestButton extends TextView {
     }
 
     private void init() {
-        mScaledTouchSlop = ViewConfiguration.get(getContext())
-                .getScaledTouchSlop();
+        mScaledTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
         Log.d(TAG, "sts:" + mScaledTouchSlop);
     }
 
@@ -43,24 +43,24 @@ public class TestButton extends TextView {
         int x = (int) event.getRawX();
         int y = (int) event.getRawY();
         switch (event.getAction()) {
-        case MotionEvent.ACTION_DOWN: {
-            break;
-        }
-        case MotionEvent.ACTION_MOVE: {
-            int deltaX = x - mLastX;
-            int deltaY = y - mLastY;
-            Log.d(TAG, "move, deltaX:" + deltaX + " deltaY:" + deltaY);
-            int translationX = (int)ViewHelper.getTranslationX(this) + deltaX;
-            int translationY = (int)ViewHelper.getTranslationY(this) + deltaY;
-            ViewHelper.setTranslationX(this, translationX);
-            ViewHelper.setTranslationY(this, translationY);
-            break;
-        }
-        case MotionEvent.ACTION_UP: {
-            break;
-        }
-        default:
-            break;
+            case MotionEvent.ACTION_DOWN: {
+                break;
+            }
+            case MotionEvent.ACTION_MOVE: {
+                int deltaX = x - mLastX;
+                int deltaY = y - mLastY;
+                Log.d(TAG, "move, deltaX:" + deltaX + " deltaY:" + deltaY);
+                int translationX = (int) ViewHelper.getTranslationX(this) + deltaX;
+                int translationY = (int) ViewHelper.getTranslationY(this) + deltaY;
+                ViewHelper.setTranslationX(this, translationX);
+                ViewHelper.setTranslationY(this, translationY);
+                break;
+            }
+            case MotionEvent.ACTION_UP: {
+                break;
+            }
+            default:
+                break;
         }
 
         mLastX = x;

@@ -45,10 +45,9 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onResume() {
+        super.onResume();
         Log.d(TAG, "UserManage.sUserId=" + UserManager.sUserId);
         persistToFile();
-
-        super.onStart();
     }
 
     private void persistToFile() {
