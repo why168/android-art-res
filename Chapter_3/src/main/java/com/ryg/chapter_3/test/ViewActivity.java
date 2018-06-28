@@ -14,6 +14,7 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Button;
+import android.widget.Scroller;
 
 import com.ryg.chapter_3.R;
 
@@ -26,6 +27,8 @@ public class ViewActivity extends Activity {
     private VelocityTracker obtain; // 速率
     private int scaledTouchSlop; // 最小滑动距离
     private GestureDetector mGestureDetector; // 手势检测
+    private Scroller mScroller; // 弹性滑动
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,8 @@ public class ViewActivity extends Activity {
         mGestureDetector = new GestureDetector(this, new MyOnGestureListener());
         // 解决长按屏幕后无法拖动的现象
         mGestureDetector.setIsLongpressEnabled(false);
+
+        mScroller = new Scroller(this);
 
         moveButton = findViewById(R.id.moveButton);
 
@@ -52,7 +57,6 @@ public class ViewActivity extends Activity {
             public void onClick(View v) {
                 moveButton.setTranslationX(10 * count);
                 count++;
-
                 getInfo();
 
             }
