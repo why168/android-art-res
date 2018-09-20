@@ -14,21 +14,17 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.Button;
-import android.widget.Scroller;
-
 import com.ryg.chapter_3.R;
-
-import java.util.logging.Logger;
+import com.ryg.chapter_3.ui.UiAppCompatButton;
 
 public class ViewActivity extends Activity {
     private Button moveButton;
+    private UiAppCompatButton mUiAppCompatButton;
     private int count = 1;
 
     private VelocityTracker obtain; // 速率
     private int scaledTouchSlop; // 最小滑动距离
     private GestureDetector mGestureDetector; // 手势检测
-    private Scroller mScroller; // 弹性滑动
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +37,8 @@ public class ViewActivity extends Activity {
         // 解决长按屏幕后无法拖动的现象
         mGestureDetector.setIsLongpressEnabled(false);
 
-        mScroller = new Scroller(this);
-
         moveButton = findViewById(R.id.moveButton);
+        mUiAppCompatButton = findViewById(R.id.moveButton2);
 
         moveButton.post(new Runnable() {
             @Override
@@ -52,6 +47,7 @@ public class ViewActivity extends Activity {
             }
         });
 
+        moveButton.computeScroll();
         moveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,10 +55,11 @@ public class ViewActivity extends Activity {
                 count++;
                 getInfo();
 
+                mUiAppCompatButton.smoothScrollerTo(10 * count, 0);
             }
         });
-
     }
+
 
     private void getInfo() {
         int width = moveButton.getWidth();
@@ -77,8 +74,6 @@ public class ViewActivity extends Activity {
                 "translationX = " + translationX + ", translationY = " + translationY);
 
         scaledTouchSlop = ViewConfiguration.get(this).getScaledTouchSlop();
-
-
     }
 
     @Override
@@ -170,8 +165,6 @@ public class ViewActivity extends Activity {
             Log.i("MyOnGestureListener", "onFling");
             return false;
         }
-
-
     }
 
 

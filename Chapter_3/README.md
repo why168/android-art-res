@@ -19,12 +19,27 @@ y = top + translationY
 
 注意：
 View在平移过程中，top和left表示是原始左上角的位置信息，其值并不会发生改变，发送变化的是x、y、translationX和translationY这4个参数
+
+event.getX():表示的是触摸的点距离自身左边界的距离 
+event.getY():表示的是触摸的点距离自身上边界的距离
+event.getRawX:表示的是触摸点距离屏幕左边界的距离
+event.getRawY:表示的是触摸点距离屏幕上边界的距离 
+View.getWidth():表示的是当前控件的宽度，即getRight()-getLeft()
+View.getHeight()：表示的是当前控件的高度，即getBottom()-getTop() 
+View.getTop():子View的顶部到父View顶部的距离
+View.getRight():子View的右边界到父View的左边界的距离 
+View.getBottom():子View的底部到父View的顶部的距离 
+View.getLeft():子View的左边界到父View的左边界的距离 
+View.getTranslationX()计算的是该View在X轴的偏移量。初始值为0，向左偏移值为负,向右偏移值为正。 
+View.getTranslationY()计算的是该View在Y轴的偏移量。初始值为0，向上偏移为负，向下偏移为证。 
 ```
 
 ## MotionEvent 事件类型
 * ACTION_DOWN：手指刚接触屏幕
 * ACTION_MOVE：手指在屏幕上移动
 * ACTION_UP：手指从屏幕上松开的一瞬间
+* ACTION_CANCEL：手指按下锁屏、手指按下不放拖动到屏幕外面
+* 
 * 点屏幕后立即松开，事件顺序DOWN->UP
 * 点屏幕滑动一会在松开，事件顺序DOWN->MOVE->MOVE->...MOVE->->UP
 * getX/getY：相对于View左上角的x和y坐标
@@ -76,8 +91,7 @@ onDoubleTapEvent  | 表示发生了双击行为，在双击的期间，ACTION_DO
 
 ## Scroller 弹性滑动对象，用于实现View的弹性滑动
 
-```
-我们知道，当使用View的scrollTO/scrollBy方法来进行滑动时，其他过程是瞬间完成的，这个没过渡效果的滑动用户体验不好。
-Scroller派上用场实现有过渡效果的滑动，其过程不是瞬间完成，而是在一定的时间间隔内完成的。
-Scroller本身无法让View弹性滑动，他需要和View的computeScroll方法配合使用才能共同完成这个功能。
-```
+* 我们知道，当使用View的scrollTO/scrollBy方法来进行滑动时，其他过程是瞬间完成的，这个没过渡效果的滑动用户体验不好。
+* Scroller派上用场实现有过渡效果的滑动，其过程不是瞬间完成，而是在一定的时间间隔内完成的。
+* Scroller本身无法让View弹性滑动，他需要和View的computeScroll方法配合使用才能共同完成这个功能。
+* scroollBy源码内部调用了scroollTo,它实现了基于当前位置的相对滑动,scrollTo则实现了绝对滑动
