@@ -1,26 +1,20 @@
 package com.ryg.chapter_3.ui;
 
-import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Resources;
-import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.ViewDragHelper;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.MotionEvent;
-import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Scroller;
 
-import com.nineoldandroids.view.ViewHelper;
 import com.ryg.chapter_3.R;
 
 /**
+ * 浮球
+ *
  * @author Edwin.Wu edwin.wu05@gmail.com
  * @version 2018/9/20 下午9:27
  * @since JDK1.8
@@ -63,28 +57,41 @@ public class SlidingRoundView extends AppCompatImageView {
         viewHeight = h;
     }
 
+
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
+        System.out.println("onWindowFocusChanged hasWindowFocus = " + hasWindowFocus);
     }
 
+    // 在所有的View对象都创建好了后会调用
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        System.out.println("onFinishInflate");
+    }
+
+    // 在视图对象都创建好后, 调用
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+        System.out.println("onAttachedToWindow");
     }
 
+    // 当Activity退出或当前View被移除触发
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        System.out.println("onDetachedFromWindow");
     }
 
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
         float rawX = event.getRawX();
         float rawY = event.getRawY();
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
                 break;
@@ -139,4 +146,15 @@ public class SlidingRoundView extends AppCompatImageView {
         });
         valueAnimator.start();
     }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        return super.dispatchTouchEvent(event);
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return super.onInterceptTouchEvent(ev);
+    }
+
 }

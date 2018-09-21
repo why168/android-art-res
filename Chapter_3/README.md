@@ -95,3 +95,19 @@ onDoubleTapEvent  | 表示发生了双击行为，在双击的期间，ACTION_DO
 * Scroller派上用场实现有过渡效果的滑动，其过程不是瞬间完成，而是在一定的时间间隔内完成的。
 * Scroller本身无法让View弹性滑动，他需要和View的computeScroll方法配合使用才能共同完成这个功能。
 * scroollBy源码内部调用了scroollTo,它实现了基于当前位置的相对滑动,scrollTo则实现了绝对滑动
+
+## View事件分发机制
+
+作用域     | 回调方法                               |
+--------  | ------------------------------------ |
+public boolean dispatchTouchEvent(MotionEvent ev) | 分发TouchEvent |
+public boolean onInterceptTouchEvent(MotionEvent ev)  | 拦截TouchEvent |
+public boolean onTouchEvent(MotionEvent ev) | 处理TouchEvent |
+
+<br>
+
+作用域     | 回调方法                               |
+--------  | ------------------------------------ |
+Activity  | dispatchTouchEvent、onTouchEvent |
+View      | dispatchTouchEvent、onTouchEvent  |
+ViewGroup | dispatchTouchEvent、onInterceptTouchEvent、onTouchEven |
