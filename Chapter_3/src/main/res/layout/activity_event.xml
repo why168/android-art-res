@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ryg.chapter_3.ui.event.EventFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF00"
+    tools:context=".EventActivity">
+
+    <com.ryg.chapter_3.ui.event.EventLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:background="#ffbf00"
+        android:gravity="center"
+        android:padding="20dp">
+
+        <com.ryg.chapter_3.ui.event.EventView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="#006fff"
+            android:gravity="center"
+            android:padding="20dp"
+            android:text="字体"
+            android:textColor="#080808"
+            android:textSize="20dp" />
+
+    </com.ryg.chapter_3.ui.event.EventLinearLayout>
+
+</com.ryg.chapter_3.ui.event.EventFrameLayout>
