@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Scroller;
 
 public class HorizontalScrollViewEx extends ViewGroup {
@@ -37,7 +38,7 @@ public class HorizontalScrollViewEx extends ViewGroup {
     }
 
     public HorizontalScrollViewEx(Context context, AttributeSet attrs,
-            int defStyle) {
+                                  int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
@@ -54,30 +55,32 @@ public class HorizontalScrollViewEx extends ViewGroup {
         int y = (int) event.getY();
 
         switch (event.getAction()) {
-        case MotionEvent.ACTION_DOWN: {
-            intercepted = false;
-            if (!mScroller.isFinished()) {
-                mScroller.abortAnimation();
-                intercepted = true;
-            }
-            break;
-        }
-        case MotionEvent.ACTION_MOVE: {
-            int deltaX = x - mLastXIntercept;
-            int deltaY = y - mLastYIntercept;
-            if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                intercepted = true;
-            } else {
+            case MotionEvent.ACTION_DOWN: {
                 intercepted = false;
+                if (!mScroller.isFinished()) {
+                    mScroller.abortAnimation();
+                    intercepted = true;
+                }
+                break;
             }
-            break;
-        }
-        case MotionEvent.ACTION_UP: {
-            intercepted = false;
-            break;
-        }
-        default:
-            break;
+            case MotionEvent.ACTION_MOVE: {
+                int deltaX = x - mLastXIntercept;
+                int deltaY = y - mLastYIntercept;
+                if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                    // 左右滑动
+                    intercepted = true;
+                } else {
+                    // 上下滑动
+                    intercepted = false;
+                }
+                break;
+            }
+            case MotionEvent.ACTION_UP: {
+                intercepted = false;
+                break;
+            }
+            default:
+                break;
         }
 
         Log.d(TAG, "intercepted=" + intercepted);
@@ -95,36 +98,36 @@ public class HorizontalScrollViewEx extends ViewGroup {
         int x = (int) event.getX();
         int y = (int) event.getY();
         switch (event.getAction()) {
-        case MotionEvent.ACTION_DOWN: {
-            if (!mScroller.isFinished()) {
-                mScroller.abortAnimation();
+            case MotionEvent.ACTION_DOWN: {
+                if (!mScroller.isFinished()) {
+                    mScroller.abortAnimation();
+                }
+                break;
             }
-            break;
-        }
-        case MotionEvent.ACTION_MOVE: {
-            int deltaX = x - mLastX;
-            int deltaY = y - mLastY;
-            scrollBy(-deltaX, 0);
-            break;
-        }
-        case MotionEvent.ACTION_UP: {
-            int scrollX = getScrollX();
-            int scrollToChildIndex = scrollX / mChildWidth;
-            mVelocityTracker.computeCurrentVelocity(1000);
-            float xVelocity = mVelocityTracker.getXVelocity();
-            if (Math.abs(xVelocity) >= 50) {
-                mChildIndex = xVelocity > 0 ? mChildIndex - 1 : mChildIndex + 1;
-            } else {
-                mChildIndex = (scrollX + mChildWidth / 2) / mChildWidth;
+            case MotionEvent.ACTION_MOVE: {
+                int deltaX = x - mLastX;
+                int deltaY = y - mLastY;
+                scrollBy(-deltaX, 0);
+                break;
             }
-            mChildIndex = Math.max(0, Math.min(mChildIndex, mChildrenSize - 1));
-            int dx = mChildIndex * mChildWidth - scrollX;
-            smoothScrollBy(dx, 0);
-            mVelocityTracker.clear();
-            break;
-        }
-        default:
-            break;
+            case MotionEvent.ACTION_UP: {
+                int scrollX = getScrollX();
+                int scrollToChildIndex = scrollX / mChildWidth;
+                mVelocityTracker.computeCurrentVelocity(1000);
+                float xVelocity = mVelocityTracker.getXVelocity();
+                if (Math.abs(xVelocity) >= 50) {
+                    mChildIndex = xVelocity > 0 ? mChildIndex - 1 : mChildIndex + 1;
+                } else {
+                    mChildIndex = (scrollX + mChildWidth / 2) / mChildWidth;
+                }
+                mChildIndex = Math.max(0, Math.min(mChildIndex, mChildrenSize - 1));
+                int dx = mChildIndex * mChildWidth - scrollX;
+                smoothScrollBy(dx, 0);
+                mVelocityTracker.clear();
+                break;
+            }
+            default:
+                break;
         }
 
         mLastX = x;

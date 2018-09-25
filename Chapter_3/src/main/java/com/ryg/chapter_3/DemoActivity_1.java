@@ -1,13 +1,16 @@
 package com.ryg.chapter_3;
 
 import java.util.ArrayList;
+
 import com.ryg.chapter_3.R;
 import com.ryg.chapter_3.ui.HorizontalScrollViewEx;
 import com.ryg.chapter_3.utils.MyUtils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +24,6 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class DemoActivity_1 extends Activity {
     private static final String TAG = "DemoActivity_1";
-
     private HorizontalScrollViewEx mListContainer;
 
     @Override
@@ -32,14 +34,14 @@ public class DemoActivity_1 extends Activity {
         initView();
     }
 
+    @SuppressLint("SetTextI18n")
     private void initView() {
         LayoutInflater inflater = getLayoutInflater();
         mListContainer = (HorizontalScrollViewEx) findViewById(R.id.container);
         final int screenWidth = MyUtils.getScreenMetrics(this).widthPixels;
         final int screenHeight = MyUtils.getScreenMetrics(this).heightPixels;
         for (int i = 0; i < 3; i++) {
-            ViewGroup layout = (ViewGroup) inflater.inflate(
-                    R.layout.content_layout, mListContainer, false);
+            ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.content_layout, mListContainer, false);
             layout.getLayoutParams().width = screenWidth;
             TextView textView = (TextView) layout.findViewById(R.id.title);
             textView.setText("page " + (i + 1));
@@ -47,6 +49,8 @@ public class DemoActivity_1 extends Activity {
             createList(layout);
             mListContainer.addView(layout);
         }
+
+//        ViewPager
     }
 
     private void createList(ViewGroup layout) {
@@ -56,16 +60,12 @@ public class DemoActivity_1 extends Activity {
             datas.add("name " + i);
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.content_list_item, R.id.name, datas);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.content_list_item, R.id.name, datas);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                    int position, long id) {
-                Toast.makeText(DemoActivity_1.this, "click item",
-                        Toast.LENGTH_SHORT).show();
-
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(DemoActivity_1.this, "click item", Toast.LENGTH_SHORT).show();
             }
         });
     }

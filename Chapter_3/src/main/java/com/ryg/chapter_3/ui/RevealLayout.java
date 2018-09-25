@@ -73,8 +73,8 @@ public class RevealLayout extends LinearLayout implements Runnable {
     }
 
     private void initParametersForChild(MotionEvent event, View view) {
-        mCenterX = event.getX() ;
-        mCenterY = event.getY() ;
+        mCenterX = event.getX();
+        mCenterY = event.getY();
         mTargetWidth = view.getMeasuredWidth();
         mTargetHeight = view.getMeasuredHeight();
         mMinBetweenWidthAndHeight = Math.min(mTargetWidth, mTargetHeight);
@@ -87,7 +87,7 @@ public class RevealLayout extends LinearLayout implements Runnable {
         int[] location = new int[2];
         view.getLocationOnScreen(location);
         int left = location[0] - mLocationInScreen[0];
-        int transformedCenterX = (int)mCenterX - left;
+        int transformedCenterX = (int) mCenterX - left;
         mMaxRevealRadius = Math.max(transformedCenterX, mTargetWidth - transformedCenterX);
     }
 
@@ -196,10 +196,12 @@ public class RevealLayout extends LinearLayout implements Runnable {
                 return;
             }
 
-            if (isTouchPointInView(mTouchTarget, (int)event.getRawX(), (int)event.getRawY())) {
+            if (isTouchPointInView(mTouchTarget, (int) event.getRawX(), (int) event.getRawY())) {
                 mTouchTarget.performClick();
             }
         }
-    };
+    }
+
+    ;
 
 }
